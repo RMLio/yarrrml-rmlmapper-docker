@@ -11,7 +11,7 @@ RUN apk --no-cache add python2 make g++ npm \
 USER rmluser:rmluser
 WORKDIR /home/rmluser
 
-RUN wget https://github.com/RMLio/rmlmapper-java/releases/download/v4.3.1/rmlmapper.jar \
+RUN wget -O rmlmapper.jar https://github.com/RMLio/rmlmapper-java/releases/download/v4.3.3/rmlmapper-4.3.3-r92.jar \
 	&& npm install @rmlio/yarrrml-parser \
 	&& mkdir data
 
