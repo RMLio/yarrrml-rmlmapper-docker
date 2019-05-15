@@ -27,5 +27,5 @@ docker run --rm \
 <rmlmapper-java options>
 ```
 
-* The container is intended a one-time job only, hence the `--rm` option.
+* The container is intended for a one-time job only, hence the `--rm` option.
 * If an output file is specified for the RMLMapper (`--outputfile`), it will be written in the mounted directory given with the `-v` option.
