@@ -1,0 +1,27 @@
+prefixes:
+  ex: "http://example.com/"
+
+mappings:
+  person:
+    sources:
+      - ['persons.json~jsonpath', '$.persons[*]']
+    s: http://example.com/person/$(firstname)
+    po:
+      - [a, foaf:Person]
+      - [ex:name, $(firstname)]
+      - p: ex:likes
+        o:
+         - mapping: movie
+           condition:
+            function: equal
+            parameters:
+              - [str1, $(movie)]
+              - [str2, $(slug)]
+  movie:
+    sources:
+      - ['movies.csv~csv']
+    s: http://example.com/movie/$(slug)
+    po:
+      - [a, schema:Movie]
+      - [schema:name, $(title)]
+      - [ex:year, $(year)]
