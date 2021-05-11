@@ -1,17 +1,21 @@
 # YARRRML + RMLMapper
 
-FROM openjdk:8-jre-alpine
+FROM adoptopenjdk:8-jre-hotspot-bionic
 
-RUN apk --no-cache add python2 make g++ npm \
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
+  nodejs
 	# change group id to group that has permissions to read input and write result!
-	&& addgroup -S -g 1000 rmluser \
+RUN groupadd --system -g 1000 rmluser \
 	# Change user id (-u) to user that has permissions to read input and write result!
-	&& adduser -S -s /bin/bash -G rmluser -u 1000 rmluser
+	&& useradd --system -s /bin/bash -g rmluser -u 1000 rmluser
 
 USER rmluser:rmluser
 WORKDIR /home/rmluser
 
-RUN wget -O rmlmapper.jar https://github.com/RMLio/rmlmapper-java/releases/download/v4.3.3/rmlmapper-4.3.3-r92.jar \
+RUN curl -L https://github.com/RMLio/rmlmapper-java/releases/download/v4.10.0/rmlmapper-4.10.0.jar > rmlmapper.jar \
 	&& npm install @rmlio/yarrrml-parser \
 	&& mkdir data
 
