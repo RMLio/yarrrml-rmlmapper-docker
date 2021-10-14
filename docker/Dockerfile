@@ -10,7 +10,7 @@ RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
 	# change group id to group that has permissions to read input and write result!
 RUN groupadd --system -g 1000 rmluser \
 	# Change user id (-u) to user that has permissions to read input and write result!
-	&& useradd --system -s /bin/bash -g rmluser -u 1000 rmluser
+	&& useradd --system -s /bin/bash -g rmluser -u 1000 rmluser --create-home
 
 USER rmluser:rmluser
 WORKDIR /home/rmluser
