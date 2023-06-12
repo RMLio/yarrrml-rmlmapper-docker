@@ -7,13 +7,15 @@ RUN apk add --no-cache bash nodejs npm wget maven && cd / && \
     ########## YARRRML-parser ##########
     wget https://github.com/RMLio/yarrrml-parser/archive/refs/heads/development.zip && \
     unzip development.zip && rm development.zip && \
-    cd /yarrrml-parser-development && \
+    mv /yarrrml-parser-development /yarrrml-parser && \
+    cd /yarrrml-parser && \
     npm install && \
     ############# RMLMapper ############
     cd / && \
     wget https://github.com/RMLio/rmlmapper-java/archive/refs/heads/development.zip && \
     unzip development.zip && rm development.zip && \
-    cd rmlmapper-java-development && \
+    mv rmlmapper-java-development rmlmapper-java && \
+    cd rmlmapper-java && \
     mvn -DskipTests -P no-buildnumber clean package && \
     cd / && \
     mkdir /mnt/data

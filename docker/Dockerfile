@@ -1,26 +1,27 @@
 # YARRRML + RMLMapper
 
-FROM adoptopenjdk:8-jre-hotspot-bionic
+FROM openjdk:18-ea-11-alpine
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+# install everything needed
+RUN apk add --no-cache bash nodejs npm wget maven git && cd / && \
+    ########## YARRRML-parser ##########
+    wget https://github.com/RMLio/yarrrml-parser/archive/refs/heads/master.zip && \
+    unzip master.zip && rm master.zip && \
+    mv /yarrrml-parser-master /yarrrml-parser && \
+    cd /yarrrml-parser && \
+    npm install && \
+    ############# RMLMapper ############
+    cd / && \
+    wget https://github.com/RMLio/rmlmapper-java/archive/refs/heads/master.zip && \
+    unzip master.zip && rm master.zip && \
+    mv rmlmapper-java-master rmlmapper-java && \
+    cd rmlmapper-java && \
+    mvn -DskipTests clean package && \
+    cd / && \
+    mkdir /mnt/data
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
-  nodejs
-	# change group id to group that has permissions to read input and write result!
-RUN groupadd --system -g 1000 rmluser \
-	# Change user id (-u) to user that has permissions to read input and write result!
-	&& useradd --system -s /bin/bash -g rmluser -u 1000 rmluser --create-home
+COPY map.sh /map.sh
 
-USER rmluser:rmluser
-WORKDIR /home/rmluser
+VOLUME ["/mnt/data"]
 
-RUN curl -L https://github.com/RMLio/rmlmapper-java/releases/download/v4.10.0/rmlmapper-4.10.0.jar > rmlmapper.jar \
-	&& npm install @rmlio/yarrrml-parser \
-	&& mkdir data
-
-COPY map.sh /home/rmluser/map.sh
-
-VOLUME ["/home/rmluser/data"]
-
-ENTRYPOINT ["/home/rmluser/map.sh"]
+ENTRYPOINT ["/map.sh"]
