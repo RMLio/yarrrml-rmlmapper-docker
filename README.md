@@ -27,6 +27,15 @@ To run the advanced example from http://rml.io/yarrrml/matey/:
 docker container run --rm --name yarrrmlmapper -v "$(pwd)/example":/mnt/data yarrrmlmapper mappings.yarrrml.yml --serialization turtle
 ```
 
+> Alternatives for getting the present working directory:
+> 
+> Powershell: use `${PWD}`
+> 
+> MinGW / git bash: use `/$(pwd)`
+> 
+> Windows command line (cmd): use `%cd%`
+
+
 ## General run instructions
 
 ```shell
