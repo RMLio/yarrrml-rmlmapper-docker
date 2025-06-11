@@ -1,4 +1,5 @@
 # YARRRML + RMLMapper
+# This dockerfile is maintained at https://github.com/RMLio/yarrrml-rmlmapper-docker
 
 FROM openjdk:18-ea-11-alpine
 

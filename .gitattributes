@@ -1,0 +1,3 @@
+# Except these files will always be checked out with CRLFs (regardless of the
+# OS they were checked out on).
+*.sh text eol=lf
